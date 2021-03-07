@@ -10,5 +10,5 @@ from test_yaml.page.base_page import BasePage
 
 class SearchPage(BasePage):
     def search(self, value):
-        self._params["value"] = value
+        self._params["search"] = value
         self.steps("../page/search.yaml")

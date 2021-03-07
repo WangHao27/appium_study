@@ -4,6 +4,8 @@
 @Auth ： wanghao
 @File ：base_page.py
 """
+from typing import List, Dict
+
 import yaml
 from appium.webdriver.webdriver import WebDriver
 from selenium.webdriver.common.by import By
@@ -57,7 +59,7 @@ class BasePage:
     def steps(self, path):
         with open(path, encoding="utf-8") as f:
             # 指定参数类型，便于后续调用相关方法
-            steps: list[dict] = yaml.safe_load(f)
+            steps: List[Dict] = yaml.safe_load(f)
             for step in steps:
                 if "by" in step.keys():
                     element = self.find(step['by'], step['locator'])
@@ -72,8 +74,8 @@ class BasePage:
                         则将_params字典中key为value对应的值替换yaml中的value
                         """
                         for param in self._params:
-                            value = content.replace("{value}", self._params[param])
-                        self.send(value, step['by'], step['locator'])
+                            content = content.replace("{%s}" % param, self._params[param])
+                        self.send(content, step['by'], step['locator'])
 
 
 

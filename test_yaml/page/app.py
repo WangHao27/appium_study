@@ -24,10 +24,10 @@ class App(BasePage):
             caps["autoGrantPermissions"] = True  # Appium自动授权app权限
             caps["unicodeKeyboard"] = True  # 解决无法输入中文问题
             self.driver = webdriver.Remote("http://localhost:4723/wd/hub", caps)
-            self.driver.implicitly_wait(10)
         else:
             # 复用之前的app服务，不用每次重启
             self.driver.start_activity(_package, _activity)
+        self.driver.implicitly_wait(10)
         return self
 
     def main(self):
